@@ -3,12 +3,13 @@ clear;
 close all;
 
 %% read in images and make them into a video
-%read in all jpg images in the file
+% read in all jpg images in the file
 file_path = '/Users/xiaochengguo/Desktop/RedChair/';  
 img_path_list = dir(strcat(file_path,'*.jpg'));      
 img_num = length(img_path_list);
 image = zeros(240,320,img_num);            
-%make the images as vedio frames
+
+% make the images as vedio frames
 % videoName = 'redchair.avi';
 % fps = 25;
 % aviobj=VideoWriter(videoName);  
@@ -30,7 +31,7 @@ end
 %% method 1：use next frame minus last frame to generate differential matrix
 %dif = image(:,:,1);
 Th = 30;                    %Threshold
-%{
+
 mask = zeros(240,320,img_num);
 for k=2:img_num
    dif = image(:,:,k) - image(:,:,k-1);
@@ -45,13 +46,12 @@ for k=2:img_num
        end
    end
 % writeVideo(aviobj,mask);
- 
-end
+ end
 % close(aviobj);
-%}
+
 %% method 2: use three frames to generate mask
-%mask1 = zeros(240,320,img_num);
-%mask2 = zeros(240,320,img_num);
+% mask1 = zeros(240,320,img_num);
+% mask2 = zeros(240,320,img_num);
 box_filter = 1/9 * ones(3,3);      %box filter
 % Gaussian filter
 sig = 2.2;
@@ -110,7 +110,7 @@ end
 % imshow(mask(:,:,220));
 % title(['Threshold = ',num2str(Th)],'FontName','Times New Roman','FontSize',30,'Color','r');
 close(aviobj);
-%{
+
 % figure(1)
 % subplot(1,2,1)
 % imshow(image(:,:,220),[0,255]);
@@ -183,6 +183,6 @@ subplot(1,2,2)
 imshow(mask(:,:,n));
 title('Foreground','FontName','Times New Roman','FontSize',45,'Color','r');
 end
-%}
+
     
     
